@@ -1,14 +1,178 @@
 ﻿
-//string firstName =Console.ReadLine();
-//string lasttName =Console.ReadLine();
-//string fathertName =Console.ReadLine();
-//int age = int.Parse(Console.ReadLine());
-//string finCode=Console.ReadLine();
-//int phoneNumber = int.Parse(Console.ReadLine());
-//string[] position = { "HR", "AUDIT", "Engineer " };
-//int salary = int.Parse(Console.ReadLine());
+bool isTerminate = false;
+while (!isTerminate)
+{
 
-using System.Xml.Linq;
+    Console.WriteLine("Plase enter user data");
+
+    string firstName;
+    while (true)
+    {
+        Console.WriteLine();
+        Console.Write("Enter first name: ");
+        firstName = Console.ReadLine();
+
+        if (!NameLengthChecker(firstName) ||
+            !OnlyStringChecker(firstName) ||
+            !isCapitalLetterChecker(firstName))
+        {
+            continue;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    string lastName;
+    while (true)
+    {
+        Console.Write("Enter lastname: ");
+        lastName = Console.ReadLine();
+
+        if (!LastNameLengthChecker(lastName) ||
+        !isCapitalLetterChecker(lastName) ||
+        !OnlyStringChecker(lastName))
+        {
+            continue;
+        }
+        else
+        {
+            break;
+        }
+
+    }
+
+    string fatherName;
+    while (true)
+    {
+        Console.Write("Enter father name: ");
+
+        fatherName = Console.ReadLine();
+
+
+        if (
+        !NameLengthChecker(fatherName) ||
+        !OnlyStringChecker(fatherName) ||
+        !isCapitalLetterChecker(fatherName))
+        {
+            continue;
+
+        }
+        else
+        {
+            break;
+        }
+
+    }
+
+    int age;
+    while (true)
+    {
+
+        Console.Write("Enter your age: ");
+        age = int.Parse(Console.ReadLine());
+
+        if (!AgeChecker(age))
+        {
+            continue;
+        }
+        else
+        {
+            break;
+        }
+
+    }
+
+    string finCode;
+    while (true)
+    {
+        Console.Write("Enter FIN code: ");
+
+        finCode = Console.ReadLine();
+        if (!FinCodeChecker(finCode))
+        {
+            continue;
+        }
+        else
+        {
+            break;
+        }
+
+
+    }
+
+
+    string phoneNumber;
+    while (true)
+    {
+        Console.Write("Enter phone number: ");
+        phoneNumber = Console.ReadLine();
+
+        if (!PhoneNumberChecker(phoneNumber))
+        {
+
+            continue;
+        }
+        else
+        {
+            break;
+        }
+    }
+
+    string position;
+    while (true)
+    {
+        Console.Write("Enter position:");
+        position = Console.ReadLine();
+        if (!PositionChecker(position))
+        {
+            continue;
+        }
+        else
+        {
+            break;
+        }
+
+
+
+    }
+
+
+    decimal salary;
+    while (true)
+    {
+        Console.Write("Enter salary: ");
+        salary = decimal.Parse(Console.ReadLine());
+
+        if (!SalaryChecker(salary))
+        {
+            continue;
+        }
+        else
+        {
+            break;
+        }
+
+
+    }
+
+    Console.WriteLine("First name: " + firstName + "  " + "Last name: " + lastName + "  " + "Father name: " + fatherName + "  " + "Age: " + age + "  " + "FIN code: " + finCode + "  " + "Phone number: " + phoneNumber + "  " + "Postion: " + position + "  " + "Salary: " + salary);
+    Console.WriteLine("Do you want exit ?  (Y/N)?");
+    string exit = Console.ReadLine();
+
+    if (ConvertToLowerText(exit) == "y")
+    {
+        isTerminate = true;
+
+    }
+    else
+    {
+        isTerminate = false;
+    }
+
+}
+
 
 static bool IsDigitChecker(char chr)
 {
@@ -71,9 +235,9 @@ static string ConvertToLowerText(string str)
 }
 static bool AgeChecker(int age)
 {
-    if (age <= 18 || age >= 65)
+    if (age < 18 || age > 65)
     {
-        Console.WriteLine("Please enter valid age");
+        Console.WriteLine("Age shoulde be greater 18 and less 65");
         return false;
     }
     else
@@ -123,8 +287,8 @@ static bool isCapitalLetterChecker(string str)
         }
         else
         {
+            Console.WriteLine("First letter should be capitalized");
             return false;
-
         }
     }
     return true;
@@ -149,14 +313,20 @@ static bool LastNameLengthChecker(string name)
 }
 static bool FinCodeChecker(string str)
 {
-    for (int i = 0; i < str.Length; i++)
+    if (str.Length != 7)
     {
-        if (!isCapitalCharChecker(str[i]) && !IsDigitChecker(str[i]))
+        Console.WriteLine("Length of FIN code should be 7 charracters");
+        return false;
+    }
+
+    foreach (char chr in str)
+    {
+        if (!isCapitalCharChecker(chr) && !IsDigitChecker(chr))
         {
+            Console.WriteLine("FIN code should contains only uppercase letters and digits");
             return false;
         }
     }
-
     return true;
 }
 static bool PhoneNumberChecker(string str)
@@ -177,17 +347,19 @@ static bool PhoneNumberChecker(string str)
         }
     }
 
+    string correctNumberCode = "+994";
+    string emptyString = "";
 
-    for (int i = 0; i < str.Length; i++)
+    for (int i = 0; i < 4; i++)
     {
-
-        if (str[0] != '+' && str[1] != '9' && str[2] != '9' && str[i] != '4')
-        {
-
-            return false;
-
-        }
+        emptyString += str[i];
     }
+    if (correctNumberCode != emptyString)
+    {
+        Console.WriteLine("Number should start with +994");
+    }
+
+
     return true;
 
 }
@@ -195,6 +367,7 @@ static bool SalaryChecker(decimal salary)
 {
     if (!(salary <= 5000 && salary >= 1500))
     {
+        Console.WriteLine("Salaray range shold be 1500-5000");
         return false;
     }
     return true;
@@ -205,7 +378,12 @@ static bool PositionChecker(string str)
 
     if (str != "hr" && str != "engineer" && str != "audit")
     {
+        Console.WriteLine("Available positions are - HR , Audit, Engineer");
         return false;
     }
     return true;
+}
+static void TerminateApp()
+{
+    Console.WriteLine("App was closed");
 }
