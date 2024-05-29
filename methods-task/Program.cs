@@ -163,6 +163,7 @@ while (!isTerminate)
 
     if (ConvertToLowerText(exit) == "y")
     {
+        TerminateApp();
         isTerminate = true;
 
     }
